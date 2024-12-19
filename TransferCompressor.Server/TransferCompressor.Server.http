@@ -1,0 +1,6 @@
+@TransferCompressor.Server_HostAddress = http://localhost:5237
+
+GET {{TransferCompressor.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

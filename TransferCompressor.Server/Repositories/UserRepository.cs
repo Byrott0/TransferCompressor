@@ -1,36 +1,53 @@
 ﻿using TransferCompressor.Server.Models;
 using TransferCompressor.Server.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace TransferCompressor.Server.Repositories
 {
     public class UserRepository : IUserRepository
     {
+        private readonly CompressorContext _context;
 
-        public Task<User> GetByIdAsync(Guid id)
+        public UserRepository(CompressorContext context)
         {
-            throw new NotImplementedException();
-        }
-        public Task<IEnumerable<User>> GetAllAsync()
-        {
-            throw new NotImplementedException();
-        }
-        public Task<User> AddAsync(User user)
-        {
-            throw new NotImplementedException();
-        }
-        public Task<User> UpdateAsync(User user)
-        {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task<User> DeleteAsync(Guid id)
+        public async Task<User> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+           return await _context.Users.FindAsync(id);
+        }
+        public async Task<IEnumerable<User>> GetAllAsync()
+        {
+            return await _context.Users.ToListAsync();
+        }
+        public async Task AddAsync(User user)
+        {
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+            
+        }
+        public async Task<User> UpdateAsync(User user)
+        {
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+            return user;
         }
 
-        public Task<User> GetUserByEmailAsync(string email)
+        public async Task DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var users = await _context.Users.FindAsync(id);
+            if (users != null)
+            {
+                _context.Users.Remove(users);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<User> GetUserByEmailAsync(string email)
+        {
+           return await _context.Users
+                .FirstOrDefaultAsync(u => u.Email == email);
         }
     }
 }

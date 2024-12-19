@@ -10,6 +10,15 @@ namespace TransferCompressor.Server
             // Add services to the container.
             builder.Services.AddAuthorization();
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("Allowvite",
+                    builder => builder.AllowAnyOrigin()
+                    .WithOrigins("http://localhost:54512")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
+            });
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -29,6 +38,8 @@ namespace TransferCompressor.Server
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
+
+            app.UseCors("Allowvite");
 
             app.MapFallbackToFile("/index.html");
 

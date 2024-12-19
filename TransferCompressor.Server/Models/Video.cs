@@ -12,6 +12,7 @@
         public string CompressedFileSize { get; set; }
         public DateTime uploadDatum { get; set; }
         public string DeelbaarLink { get; set; }
+        public ICollection<EmbedVideo> EmbedVideo { get; set; }
 
     }
 }

@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using TransferCompressor.Server.Data;
 using TransferCompressor.Server.Models;
 namespace TransferCompressor.Server.Repositories
@@ -45,11 +43,11 @@ namespace TransferCompressor.Server.Repositories
                 await _context.SaveChangesAsync();
             }
         }
-        public async Task<IEnumerable<Video>> GetVideoByUserAsync(Guid userId)
+        public async Task<IEnumerable<Video>> GetVideoByUserAsync(User userId)
         {
             return await _context.Videos
-            .Where(v => v.userId == userId)
-                .ToListAsync();
+           .Where(v => v.userId.userId == userId.userId)
+           .ToListAsync();
         }
 
     }

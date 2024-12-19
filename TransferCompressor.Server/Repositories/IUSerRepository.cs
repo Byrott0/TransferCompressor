@@ -6,9 +6,9 @@ namespace TransferCompressor.Server.Repositories
     {
         Task<User> GetByIdAsync(Guid id);
         Task<IEnumerable<User>> GetAllAsync();
-        Task<User> AddAsync(User user);
+        Task AddAsync(User user);
         Task<User> UpdateAsync(User user);
-        Task<User> DeleteAsync(Guid id);
+        Task DeleteAsync(Guid id);
         Task<User> GetUserByEmailAsync(string email);
     }
 }

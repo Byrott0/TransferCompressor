@@ -1,3 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using TransferCompressor.Server.Data;
+using TransferCompressor.Server.Repositories;
+using TransferCompressor.Server.Services;
 
 namespace TransferCompressor.Server
 {
@@ -8,16 +12,29 @@ namespace TransferCompressor.Server
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddControllers(); // Nodig om controllers te registreren
             builder.Services.AddAuthorization();
 
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("Allowvite",
                     builder => builder.AllowAnyOrigin()
-                    .WithOrigins("http://localhost:54512")
+                        .WithOrigins("http://localhost:54512")
                         .AllowAnyMethod()
                         .AllowAnyHeader());
             });
+
+            // Database setup
+            builder.Services.AddDbContext<CompressorContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            // Dependency Injection
+
+            builder.Services.AddScoped<IEmbedVideoRepository, EmbedVideoRepository>();
+            builder.Services.AddScoped<IVideoRepository, VideoRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<VideoService>();
+            builder.Services.AddScoped<UserService>();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -38,8 +55,9 @@ namespace TransferCompressor.Server
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
             app.UseCors("Allowvite");
+
+            app.MapControllers(); // Zorgt ervoor dat controllers worden gemapt naar routes
 
             app.MapFallbackToFile("/index.html");
 

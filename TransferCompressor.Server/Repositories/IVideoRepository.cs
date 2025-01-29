@@ -9,7 +9,7 @@ namespace TransferCompressor.Server.Repositories
         Task AddAsync(Video video);
         Task UpdateAsync(Video video);
         Task DeleteAsync(Guid id);
-        Task<IEnumerable<Video>> GetVideoByUserAsync(User userId);
+        Task<IEnumerable<Video>> GetVideoByUserAsync(User user);
        
     }
 }

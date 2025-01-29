@@ -43,10 +43,10 @@ namespace TransferCompressor.Server.Repositories
                 await _context.SaveChangesAsync();
             }
         }
-        public async Task<IEnumerable<Video>> GetVideoByUserAsync(User userId)
+        public async Task<IEnumerable<Video>> GetVideoByUserAsync(User user)
         {
             return await _context.Videos
-           .Where(v => v.userId.userId == userId.userId)
+           .Where(v => v.userId == user.userId)
            .ToListAsync();
         }
 

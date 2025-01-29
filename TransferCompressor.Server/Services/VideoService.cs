@@ -14,6 +14,7 @@ namespace TransferCompressor.Server.Services
             _embedVideoRepository = embedVideoRepository;
         }
 
+      
         // haal alle videos op
         public async Task<IEnumerable<Video>> GetAllVideosAsync()
         {
@@ -21,20 +22,21 @@ namespace TransferCompressor.Server.Services
         }
 
         // voeg een video toe en maak het embed
-        public async Task AddVideoAsync(string filenaam, string originalFilePath, long fileSize)
+        public async Task AddVideoAsync(string filenaam, string originalFilePath, long fileSize, User user)
         {
             string compressedFilePath = originalFilePath.Replace("original", "compressed");
             long compressedFileSize = fileSize / 3;
 
             var video = new Video
             {
+                user = user,
+                userId = user.userId,
                 CompressedFilePad = compressedFilePath,
                 OriginalFilePad = originalFilePath,
-                OriginalFileSize = fileSize.ToString(),
-                CompressedFileSize = compressedFileSize.ToString(),
+                OriginalFileSize = fileSize, // geen conversie meer nodig
+                CompressedFileSize = compressedFileSize,
                 uploadDatum = DateTime.UtcNow,
                 DeelbaarLink = GenereerDeelbareLink()
-
             };
 
             await _videoRepository.AddAsync(video);

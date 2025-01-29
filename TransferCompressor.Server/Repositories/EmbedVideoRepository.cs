@@ -34,7 +34,7 @@ namespace TransferCompressor.Server.Repositories
             return embedVideo;
         }
 
-        public async Task<EmbedVideo> UpdateEmbedAsync(EmbedVideo embedVideo)
+        public async Task UpdateEmbedAsync(EmbedVideo embedVideo)
         {
             var existingEmbed = await _context.EmbedVideos.FindAsync(embedVideo.embedId);
             if (existingEmbed != null)
@@ -44,21 +44,21 @@ namespace TransferCompressor.Server.Repositories
                 existingEmbed.VideoId = embedVideo.VideoId;
                 _context.EmbedVideos.Update(existingEmbed);
                 await _context.SaveChangesAsync();
-                return existingEmbed;
+                
             }
-            return null;
+           
         }
 
-        public async Task<EmbedVideo> DeleteEmbedAsync(Guid id)
+        public async Task DeleteEmbedAsync(Guid id)
         {
             var embedVideo = await _context.EmbedVideos.FindAsync(id);
             if (embedVideo != null)
             {
                 _context.EmbedVideos.Remove(embedVideo);
                 await _context.SaveChangesAsync();
-                return true;
+                
             }
-            return false;
+           
         }
 
         public async Task<IEnumerable<EmbedVideo>> GetEmbedByVideoAsync(Guid videoId)

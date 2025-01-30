@@ -25,15 +25,11 @@ namespace TransferCompressor.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<Video>> AddVideo([FromBody] VideoDTO videoDTO)
         {
-            if (videoDTO == null)
+            if (!ModelState.IsValid)
             {
-                return BadRequest("Het videoDTO-object is niet ontvangen. Controleer de JSON body.");
+                return BadRequest(ModelState);
             }
-            if (videoDTO.user == null)
-            {
-                return BadRequest("Het user-object ontbreekt.");
-            }
-            await _videoService.AddVideoAsync(videoDTO.fileNaam, videoDTO.OriginalFilePad, videoDTO.OriginalFileSize, videoDTO.user);
+            await _videoService.AddVideoAsync(videoDTO.fileNaam, videoDTO.OriginalFilePad, videoDTO.OriginalFileSize, videoDTO.userId);
             return CreatedAtAction(nameof(GetAllVideos), new { id = videoDTO.Id }, videoDTO);
         }
 

@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 using TransferCompressor.Server.Data;
 using TransferCompressor.Server.Repositories;
 using TransferCompressor.Server.Services;
@@ -12,7 +13,13 @@ namespace TransferCompressor.Server
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddControllers(); // Nodig om controllers te registreren
+            builder.Services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+        options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
+        });
+
             builder.Services.AddAuthorization();
 
             builder.Services.AddCors(options =>
@@ -35,6 +42,7 @@ namespace TransferCompressor.Server
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<VideoService>();
             builder.Services.AddScoped<UserService>();
+            builder.Services.AddScoped<IEmailService, EmailService>();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

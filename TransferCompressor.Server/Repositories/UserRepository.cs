@@ -33,6 +33,10 @@ namespace TransferCompressor.Server.Repositories
             await _context.SaveChangesAsync();
             return user;
         }
+        public async Task SaveChanges()
+        {
+            await _context.SaveChangesAsync();
+        }
 
         public async Task DeleteAsync(Guid id)
         {

@@ -8,10 +8,12 @@ namespace TransferCompressor.Server.Services
     {
         private readonly IVideoRepository _videoRepository;
         private readonly IEmbedVideoRepository _embedVideoRepository;
-        public VideoService(IVideoRepository videoRepository, IEmbedVideoRepository embedVideoRepository)
+        private readonly IUserRepository _userRepository;
+        public VideoService(IVideoRepository videoRepository, IEmbedVideoRepository embedVideoRepository, IUserRepository userRepository)
         {
             _videoRepository = videoRepository;
             _embedVideoRepository = embedVideoRepository;
+            _userRepository = userRepository;
         }
 
       
@@ -22,8 +24,10 @@ namespace TransferCompressor.Server.Services
         }
 
         // voeg een video toe en maak het embed
-        public async Task AddVideoAsync(string filenaam, string originalFilePath, long fileSize, User user)
+        public async Task AddVideoAsync(string filenaam, string originalFilePath, long fileSize, Guid userId)
         {
+            var user = await _userRepository.GetByIdAsync(userId);
+
             string compressedFilePath = originalFilePath.Replace("original", "compressed");
             long compressedFileSize = fileSize / 3;
 

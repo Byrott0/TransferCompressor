@@ -52,49 +52,6 @@ namespace TransferCompressor.Server.Services
                 mailMessage.Dispose();
             }
         }
-        // Verstuur een e-mail met een afbeelding als bijlage
-        public async Task SendEmailWithImage(string naarGebruiker, string subject, string body, byte[] attachmentData)
-        {
-            using (var client = new SmtpClient(_smtpServer, _smtpPort)
-            {
-                Credentials = new NetworkCredential(_smtpUser, _smtpPass),
-                EnableSsl = true // Zorg voor een veilige verbinding via SSL/TLS
-            })
-            {
-                var mailMessage = new MailMessage
-                {
-                    From = new MailAddress(_senderEmail, _senderName),
-                    Subject = subject,
-                    Body = body,
-                    IsBodyHtml = true
-                };
-                mailMessage.To.Add(naarGebruiker);
-
-                using (var stream = new MemoryStream(attachmentData))
-                {
-                    var attachment = new Attachment(stream, "image.png", "image/png");
-                    mailMessage.Attachments.Add(attachment);
-
-                    try
-                    {
-
-                        await client.SendMailAsync(mailMessage);
-                    }
-                    catch (Exception ex)
-                    {
-
-                        throw new InvalidOperationException("Error sending email with image attachment.", ex);
-                    }
-                    finally
-                    {
-
-                        mailMessage.Attachments.Dispose();
-                        attachment.Dispose();
-                    }
-                }
-            }
-        }
-
 
         public void SendEmail(string naarGebruiker, string subject, string body)
         {

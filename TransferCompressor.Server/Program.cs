@@ -37,7 +37,7 @@ namespace TransferCompressor.Server
 
             // Dependency Injection
 
-            builder.Services.AddScoped<IEmbedVideoRepository, EmbedVideoRepository>();
+            //builder.Services.AddScoped<IEmbedVideoRepository, EmbedVideoRepository>();
             builder.Services.AddScoped<IVideoRepository, VideoRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<VideoService>();

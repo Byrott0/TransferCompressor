@@ -7,12 +7,12 @@ namespace TransferCompressor.Server.Services
     public class VideoService
     {
         private readonly IVideoRepository _videoRepository;
-        private readonly IEmbedVideoRepository _embedVideoRepository;
+        //private readonly IEmbedVideoRepository _embedVideoRepository;
         private readonly IUserRepository _userRepository;
-        public VideoService(IVideoRepository videoRepository, IEmbedVideoRepository embedVideoRepository, IUserRepository userRepository)
+        public VideoService(IVideoRepository videoRepository, /*IEmbedVideoRepository embedVideoRepository,*/ IUserRepository userRepository)
         {
             _videoRepository = videoRepository;
-            _embedVideoRepository = embedVideoRepository;
+            //_embedVideoRepository = embedVideoRepository;
             _userRepository = userRepository;
         }
 
@@ -45,12 +45,11 @@ namespace TransferCompressor.Server.Services
 
             await _videoRepository.AddAsync(video);
 
-            var embed = new EmbedVideo
-            {
-                VideoId = video.Id,
-                EmbedCode = $"<iframe src='{video.DeelbaarLink}' frameborder='0' allowfullscreen></iframe>"
-            };
-            await _embedVideoRepository.AddEmbedAsync(embed);
+            //var embed = new EmbedVideo
+            //{
+            //    VideoId = video.Id
+            //};
+            //await _embedVideoRepository.AddEmbedAsync(embed);
         }
 
         // haal gegevens van een video op
@@ -62,20 +61,20 @@ namespace TransferCompressor.Server.Services
 
         // haal embed code op van een video
 
-        public async Task<EmbedVideo> GetEmbedByIdAsync(Guid id)
-        {
-            return await _embedVideoRepository.GetEmbedIdAsync(id);
-        }
+        //public async Task<EmbedVideo> GetEmbedByIdAsync(Guid id)
+        //{
+        //    return await _embedVideoRepository.GetEmbedIdAsync(id);
+        //}
 
         // verwijder een video en de bijbehorende embed code
 
         public async Task DeleteVideoAsync(Guid id)
         {
-            var embed = await _embedVideoRepository.GetEmbedIdAsync(id);
-            if(embed != null)
-            {
-                await _embedVideoRepository.DeleteEmbedAsync(embed.embedId);
-            }
+            //var embed = await _embedVideoRepository.GetEmbedIdAsync(id);
+            //if(embed != null)
+            //{
+            //    await _embedVideoRepository.DeleteEmbedAsync(embed.embedId);
+            //}
             //video wordt nu verwijderd
             await _videoRepository.DeleteAsync(id);
 

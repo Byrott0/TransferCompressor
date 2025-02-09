@@ -7,7 +7,7 @@ namespace TransferCompressor.Server.Data
     {
         public DbSet<User> Users => Set<User>();
         public DbSet<Video> Videos => Set<Video>();
-        public DbSet<EmbedVideo> EmbedVideos => Set<EmbedVideo>();
+        //public DbSet<EmbedVideo> EmbedVideos => Set<EmbedVideo>();
 
         public CompressorContext(DbContextOptions<CompressorContext> options)
         : base(options){ }
@@ -24,15 +24,15 @@ namespace TransferCompressor.Server.Data
             .OnDelete(DeleteBehavior.Cascade); // Verwijder video's bij verwijderen van gebruiker
 
 
-            modelBuilder.Entity<EmbedVideo>()
-                .HasKey(e => e.embedId);
+            //modelBuilder.Entity<EmbedVideo>()
+            //    .HasKey(e => e.embedId);
   
-            modelBuilder.Entity<EmbedVideo>()
-                .HasOne(e => e.video)
-                .WithMany(v => v.EmbedVideo)
-                .HasForeignKey(e => e.VideoId)
-                .OnDelete(DeleteBehavior.Cascade); // wanneer video wordt verwijderd
-                                                   // wordt ook de embed video verwijderd
+            //modelBuilder.Entity<EmbedVideo>()
+            //    .HasOne(e => e.video)
+            //    .WithMany(v => v.EmbedVideo)
+            //    .HasForeignKey(e => e.VideoId)
+            //    .OnDelete(DeleteBehavior.Cascade); // wanneer video wordt verwijderd
+            //                                       // wordt ook de embed video verwijderd
 
             modelBuilder.Entity<User>()
        .Property(u => u.userId)

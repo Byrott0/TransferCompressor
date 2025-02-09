@@ -31,7 +31,7 @@ namespace TransferCompressor.Server.DTO
         [JsonPropertyName("deelbaarLink")]
         public string DeelbaarLink { get; set; }
 
-        [JsonPropertyName("embedVideo")]
-        public ICollection<EmbedVideo> EmbedVideo { get; set; }
+        //[JsonPropertyName("embedVideo")]
+        //public ICollection<EmbedVideo> EmbedVideo { get; set; }
     }
 }

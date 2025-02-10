@@ -16,10 +16,10 @@ namespace TransferCompressor.Server.Controllers
     {
         public readonly VideoService _videoService;
 
+
         public VideoController(VideoService videoService)
         {
             _videoService = videoService;
-            
         }
 
         [HttpPost]

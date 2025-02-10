@@ -9,6 +9,8 @@ namespace TransferCompressor.Server.Models
         [Key]
         public Guid userId { get; set; }
 
+        public string naam { get; set; }
+
         [Required(ErrorMessage = "The email field is required.")]
         [EmailAddress(ErrorMessage = "Invalid email format.")]
         public string Email { get; set; }

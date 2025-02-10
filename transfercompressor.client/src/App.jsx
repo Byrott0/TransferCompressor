@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./pages/Layout";
 import Index from "./Index";
 import Register from "./pages/Register";
-import Contact from "./pages/Contact";
+import CompressPage from "./pages/CompressPage";
 import './App.css';
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
                 <Route path="/" element={<Layout />}>
                     <Route index element={<Index />} />
                     <Route path="Register" element={<Register />} />
-                    <Route path="Contact" element={<Contact />} />
+                    <Route path="CompressPage" element={<CompressPage />} />
                 </Route>
             </Routes>
         </BrowserRouter>

@@ -1,19 +1,39 @@
-﻿import { useState } from "react";
-import { Link } from "react-router-dom";
+﻿/* eslint-disable no-unused-vars */
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Index = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [userId, setUserId] = useState(null);
+    const navigate = useNavigate(); // Hook voor navigatie
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        // Add login logic here
+        setIsLoading(true);
+        try {
+            const payload = { email, password };
+            const response = await axios.post("http://localhost:7063/api/User/login", payload);
+
+            if (response.data && response.data.userId) {
+                setUserId(response.data.userId);
+                navigate("/CompressPage"); // Doorsturen naar compressPage.jsx
+            } else {
+                alert("Inloggen mislukt.");
+            }
+        } catch (error) {
+            console.error("Fout bij inloggen:", error);
+            alert("Inloggen is gefaald, Probeer Opnieuw.");
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const handleKeyPress = (e) => {
         if (e.key === "Enter") {
+            e.preventDefault();
             handleLogin(e);
         }
     };
@@ -38,7 +58,7 @@ const Index = () => {
                             />
                             <div className="password-input-wrapper">
                                 <input
-                                    
+                                    type="password"
                                     placeholder="Wachtwoord"
                                     value={password}
                                     onInput={(e) => setPassword(e.target.value)}
@@ -46,7 +66,6 @@ const Index = () => {
                                     onKeyDown={handleKeyPress}
                                     aria-label="Vul wachtwoord in"
                                 />
-                              
                             </div>
                             <button type="submit" disabled={isLoading}>
                                 {isLoading ? "Inloggen..." : "Login"}

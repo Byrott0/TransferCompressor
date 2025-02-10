@@ -30,10 +30,11 @@ namespace TransferCompressor.Server.Services
         }
 
         // voeg een gebruiker toe
-        public async Task AddUserAsync(string email, string password)
+        public async Task AddUserAsync(string naam, string email, string password)
         {
             var user = new User
             {
+                naam = naam,
                 Email = email,
                 Password = password
                 // userId wordt automatisch gegenereerd door de database

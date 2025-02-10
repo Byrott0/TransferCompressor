@@ -28,7 +28,7 @@ namespace TransferCompressor.Server.Controllers
 
             try
             {
-                await _userService.AddUserAsync(userDTO.Email, userDTO.Password);
+                await _userService.AddUserAsync(userDTO.naam, userDTO.Email, userDTO.Password);
                 var createdUser = await _userService.GetUserByEmailAsync(userDTO.Email, userDTO.userId);
                 return CreatedAtAction(nameof(GetUserById), new { id = createdUser.userId }, createdUser);
             }

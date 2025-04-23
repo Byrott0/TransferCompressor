@@ -1,4 +1,6 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
+import './style.css'
 
 const CompressPage = () => {
     const [message, setMessage] = useState("");
@@ -31,12 +33,16 @@ const CompressPage = () => {
     };
 
     return (
-        <div>
-            <h1>Video Uploader</h1>
-            <input type="file" accept="video/*" onChange={handleFileUpload} />
-            <p>{message}</p>
+        <div className = "compress-container">
+            <h1 className = "compress-title">Video Uploader</h1>
+            <input type="file" accept="video/*" onChange={handleFileUpload}
+             className="compress-file-input" />
+            <p className = "compress-message">{message}</p>
             {compressedVideoURL && (
-                <video controls src={compressedVideoURL} style={{ width: "400px" }} />
+                <video
+                    controls
+                    src={compressedVideoURL}
+                    className="compress-video" />
             )}
         </div>
     );

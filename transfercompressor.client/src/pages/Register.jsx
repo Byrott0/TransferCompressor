@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import './style.css'
+
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -49,8 +51,8 @@ const Register = () => {
 
     return (
         <div>
-            <h1>Registreer een nieuw account</h1>
-            <form onSubmit={handleRegister}>
+            <h1 className="register-title">Registreer een nieuw account</h1>
+            <form onSubmit={handleRegister} className="register-form">
                 <input
                     type="text"
                     name="Naam"
@@ -58,6 +60,7 @@ const Register = () => {
                     value={formData.Naam}
                     onChange={handleInputChange}
                     required
+                    className="register-input"
                 />
                 <input
                     type="email"
@@ -66,6 +69,7 @@ const Register = () => {
                     value={formData.Email}
                     onChange={handleInputChange}
                     required
+                    className="register-input"
                 />
                 <input
                     type="password"
@@ -74,8 +78,9 @@ const Register = () => {
                     value={formData.wachtwoord}
                     onChange={handleInputChange}
                     required
+                    className="register-input"
                 />
-                <button type="submit" disabled={isLoading}>
+                <button type="submit" disabled={isLoading} className = "register-button">
                     {isLoading ? "Registreren..." : "Registreer"}
                 </button>
             </form>

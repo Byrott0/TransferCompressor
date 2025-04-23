@@ -1,10 +1,13 @@
 import { Outlet, Link } from "react-router-dom";
+import './style.css'
+
+
 
 const Layout = () => {
     return (
-        <>
-            <nav>
-                <ul>
+        <div className="layout-container">
+            <nav className = "sidebar">
+                <ul className = "nav-list">
                     <li>
                         <Link to="/">Home</Link>
                     </li>
@@ -18,7 +21,7 @@ const Layout = () => {
             </nav>
 
             <Outlet />
-        </>
+        </div>
     )
 };
 

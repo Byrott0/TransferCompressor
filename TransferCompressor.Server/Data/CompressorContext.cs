@@ -31,6 +31,10 @@ namespace TransferCompressor.Server.Data
             modelBuilder.Entity<User>()
              .HasIndex(u => u.email)
              .IsUnique();
+
+            modelBuilder.Entity<User>()
+            .HasIndex(u => u.username)
+            .IsUnique();
         }
     }
 }

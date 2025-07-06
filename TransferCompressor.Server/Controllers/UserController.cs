@@ -3,6 +3,7 @@ using TransferCompressor.Server.Services;
 using TransferCompressor.Server.Models;
 using TransferCompressor.Server.DTO;
 using System;
+using Microsoft.EntityFrameworkCore;
 
 namespace TransferCompressor.Server.Controllers
 {
@@ -31,9 +32,9 @@ namespace TransferCompressor.Server.Controllers
                 var createdUser = await _userService.AddUserAsync(userDTO);
                 return StatusCode(200, "success!");
             }
-            catch (Exception ex)
+            catch (DbUpdateException ex)
             {
-                return StatusCode(500, $"Interne serverfout: {ex.Message}");
+                return StatusCode(403, "Gebruiker bestaat al womp womp");
             }
         }
 

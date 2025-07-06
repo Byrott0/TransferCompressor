@@ -9,15 +9,15 @@ namespace TransferCompressor.Server.Models
         [Key]
         public Guid userId { get; set; }
 
+        public string name { get; set; }
         public string username { get; set; }
 
         [Required(ErrorMessage = "The email field is required.")]
         [EmailAddress(ErrorMessage = "Invalid email format.")]
-        public string Email { get; set; }
+        public string email { get; set; }
 
         [Required(ErrorMessage = "The password field is required.")]
-        public string Password { get; set; }
-
+        public string password { get; set; }
         public List<Video> UploadedVideos { get; set; } = new List<Video>();
     }
 }

@@ -19,7 +19,7 @@ namespace TransferCompressor.Server.Controllers
 
         // Maak een nieuwe gebruiker aan
         [HttpPost]
-        public async Task<ActionResult<User>> CreateUser([FromBody] UserDTO userDTO)
+        public async Task<ActionResult<User>> CreateUser([FromBody] UserCreateDto userDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -28,9 +28,8 @@ namespace TransferCompressor.Server.Controllers
 
             try
             {
-                await _userService.AddUserAsync(userDTO.username, userDTO.Email, userDTO.Password);
-                var createdUser = await _userService.GetUserByEmailAsync(userDTO.Email, userDTO.userId);
-                return CreatedAtAction(nameof(GetUserById), new { id = createdUser.userId }, createdUser);
+                var createdUser = await _userService.AddUserAsync(userDTO);
+                return StatusCode(200, "success!");
             }
             catch (Exception ex)
             {
@@ -68,37 +67,37 @@ namespace TransferCompressor.Server.Controllers
         }*/
 
         // Werk een gebruiker bij
-        [HttpPut]
-        public async Task<IActionResult> UpdateUser([FromBody] UserDTO userDTO)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //[HttpPut]
+        //public async Task<IActionResult> UpdateUser([FromBody] UserCreateDto userDTO)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            try
-            {
-                await _userService.UpdateUserAsync(userDTO.userId, userDTO.Email, userDTO.Password);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Interne serverfout: {ex.Message}");
-            }
-        }
+        //    try
+        //    {
+        //        await _userService.UpdateUserAsync(userDTO.userId, userDTO.Email, userDTO.Password);
+        //        return NoContent();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, $"Interne serverfout: {ex.Message}");
+        //    }
+        //}
 
         // Verwijder een gebruiker
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(Guid id)
-        {
-            var user = await _userService.GetUserByIdAsync(id);
-            if (user == null)
-            {
-                return NotFound("Gebruiker niet gevonden.");
-            }
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteUser(Guid id)
+        //{
+        //    var user = await _userService.GetUserByIdAsync(id);
+        //    if (user == null)
+        //    {
+        //        return NotFound("Gebruiker niet gevonden.");
+        //    }
 
-            await _userService.DeleteUserAsync(id);
-            return NoContent();
-        }
+        //    await _userService.DeleteUserAsync(id);
+        //    return NoContent();
+        //}
     }
 }

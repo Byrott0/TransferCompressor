@@ -1,6 +1,8 @@
 ﻿using TransferCompressor.Server.Models;
 using TransferCompressor.Server.Repositories;
 using TransferCompressor.Server.Data;
+using TransferCompressor.Server.DTO;
+using Microsoft.AspNetCore.Identity;
 
 namespace TransferCompressor.Server.Services
 {
@@ -23,30 +25,32 @@ namespace TransferCompressor.Server.Services
             return await _userRepository.GetAllAsync();
         }
 
-        // haal alle videos van een gebruiker op (HOTFIX!)
-        
-        /*public async Task<IEnumerable<Video>> GetVideosByUserAsync(User userId)
+        // haal alle videos van een gebruiker op
+        public async Task<IEnumerable<Video>> GetVideosByUserAsync(User userId)
         {
             return await _videoRepository.GetVideoByUserAsync(userId);
-        }*/
+        }
 
         // voeg een gebruiker toe
-        public async Task AddUserAsync(string naam, string email, string password)
+        public async Task<User> AddUserAsync(UserCreateDto userCreate)
         {
+            
+            var hasher = new PasswordHasher<User>();
+
             var user = new User
             {
-                username = naam,
-                Email = email,
-                Password = password
-                // userId wordt automatisch gegenereerd door de database
+                name = userCreate.name,
+                username = userCreate.username, // TODO: check if this is unique
+                email = userCreate.email,
+                UploadedVideos = new List<Video>()
             };
+            user.password = hasher.HashPassword(user, userCreate.password);
+
+
             await _userRepository.AddAsync(user);
-            // sla op
             await _userRepository.SaveChanges();
 
-            // stuur een welkomstmail
-            await _emailService.SendEmailAsync
-           (email, "Nieuw account aangemaakt:", "Welkom bij TransferCompressor! Uw account is aangemaakt.");
+            return user;
         }
 
         // haal gegevens van een gebruiker op
@@ -68,8 +72,8 @@ namespace TransferCompressor.Server.Services
             var user = await _userRepository.GetByIdAsync(userId);
             if (user != null)
             {
-                user.Email = email;
-                user.Password = password;
+                user.email = email;
+                user.password = password;
                 await _userRepository.UpdateAsync(user);
             }
             // sla op

@@ -23,27 +23,14 @@ namespace TransferCompressor.Server.Data
             .HasForeignKey(v => v.userId)
             .OnDelete(DeleteBehavior.Cascade); // Verwijder video's bij verwijderen van gebruiker
 
-
-            //modelBuilder.Entity<EmbedVideo>()
-            //    .HasKey(e => e.embedId);
-  
-            //modelBuilder.Entity<EmbedVideo>()
-            //    .HasOne(e => e.video)
-            //    .WithMany(v => v.EmbedVideo)
-            //    .HasForeignKey(e => e.VideoId)
-            //    .OnDelete(DeleteBehavior.Cascade); // wanneer video wordt verwijderd
-            //                                       // wordt ook de embed video verwijderd
-
             modelBuilder.Entity<User>()
        .Property(u => u.userId)
        .ValueGeneratedOnAdd() // Voeg dit toe
        .HasDefaultValueSql("NEWID()"); // Voor SQL Server
 
             modelBuilder.Entity<User>()
-             .HasIndex(u => u.Email)
+             .HasIndex(u => u.email)
              .IsUnique();
-
-
         }
     }
 }

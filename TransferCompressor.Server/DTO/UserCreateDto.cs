@@ -3,18 +3,20 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TransferCompressor.Server.DTO
 {
-    public class UserDTO
+    public class UserCreateDto
     {
-        public Guid userId { get; set; }
-        // userId wordt automatisch gegenereerd door de database
+        [Required(ErrorMessage = "Name is verplicht.")]
+        public string name { get; set; }   
+
+        [Required(ErrorMessage = "username is verplicht.")]
         public string username { get; set; }
 
-        [Required(ErrorMessage = "Email is verplicht.")]
+        [Required(ErrorMessage = "email is verplicht.")]
         [EmailAddress(ErrorMessage = "Ongeldig emailformaat.")]
-        public string Email { get; set; }
+        public string email { get; set; }
 
         [Required(ErrorMessage = "Wachtwoord is verplicht.")]
         [MinLength(6, ErrorMessage = "Wachtwoord moet minimaal 6 tekens bevatten.")]
-        public string Password { get; set; }
+        public string password { get; set; }
     }
 }

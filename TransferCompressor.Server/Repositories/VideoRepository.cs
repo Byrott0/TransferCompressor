@@ -46,7 +46,7 @@ namespace TransferCompressor.Server.Repositories
         public async Task<IEnumerable<Video>> GetVideoByUserAsync(User user)
         {
             return await _context.Videos
-           .Where(v => v.userId == user.userId)
+           .Where(v => v.user.userId == user.userId)
            .ToListAsync();
         }
 

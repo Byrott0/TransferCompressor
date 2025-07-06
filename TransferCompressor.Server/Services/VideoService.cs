@@ -34,13 +34,8 @@ namespace TransferCompressor.Server.Services
             var video = new Video
             {
                 user = user,
-                userId = user.userId,
-                CompressedFilePad = compressedFilePath,
-                OriginalFilePad = originalFilePath,
                 OriginalFileSize = fileSize, // geen conversie meer nodig
-                CompressedFileSize = compressedFileSize,
-                uploadDatum = DateTime.UtcNow,
-                DeelbaarLink = GenereerDeelbareLink()
+                uploadDatum = DateTime.UtcNow
             };
 
             await _videoRepository.AddAsync(video);

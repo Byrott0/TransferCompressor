@@ -11,7 +11,7 @@ namespace TransferCompressor.Server.Controllers
     public class UserController : ControllerBase
     {
         private readonly UserService _userService;
-
+        
         public UserController(UserService userService)
         {
             _userService = userService;
@@ -28,7 +28,7 @@ namespace TransferCompressor.Server.Controllers
 
             try
             {
-                await _userService.AddUserAsync(userDTO.naam, userDTO.Email, userDTO.Password);
+                await _userService.AddUserAsync(userDTO.username, userDTO.Email, userDTO.Password);
                 var createdUser = await _userService.GetUserByEmailAsync(userDTO.Email, userDTO.userId);
                 return CreatedAtAction(nameof(GetUserById), new { id = createdUser.userId }, createdUser);
             }
@@ -59,13 +59,13 @@ namespace TransferCompressor.Server.Controllers
             return Ok(users);
         }
 
-        // Haal video's van een gebruiker op
-        [HttpGet("{id}/videos")]
+        // Haal video's van een gebruiker op (HOTFIX! kijk userService.cs)
+        /*[HttpGet("{id}/videos")]
         public async Task<ActionResult<IEnumerable<Video>>> GetVideosByUser(User id)
         {
             var videos = await _userService.GetVideosByUserAsync(id);
             return Ok(videos);
-        }
+        }*/
 
         // Werk een gebruiker bij
         [HttpPut]

@@ -22,58 +22,7 @@ namespace TransferCompressor.Server.Services
             _senderEmail = configuration["EmailSettings:SenderEmail"];
             _senderName = configuration["EmailSettings:SenderName"];
         }
-
-        public void SendEmailWithAttachment(string naarGebruiker, string subject, string body, byte[] attachmentData, string attachmentName)
-        {
-            using (var client = new SmtpClient(_smtpServer, _smtpPort)
-            {
-                Credentials = new NetworkCredential(_smtpUser, _smtpPass),
-                EnableSsl = true
-            })
-            {
-                var mailMessage = new MailMessage
-                {
-                    From = new MailAddress(_senderEmail, _senderName),
-                    Subject = subject,
-                    Body = body,
-                    IsBodyHtml = true
-                };
-                mailMessage.To.Add(naarGebruiker);
-
-                // Voeg de bijlage toe
-                var stream = new MemoryStream(attachmentData);
-                var attachment = new Attachment(stream, attachmentName, "application/pdf");
-                mailMessage.Attachments.Add(attachment);
-
-                client.Send(mailMessage);
-
-                // Zorg ervoor dat de stream en mailMessage correct worden opgeruimd
-                stream.Dispose();
-                mailMessage.Dispose();
-            }
-        }
-
-        public void SendEmail(string naarGebruiker, string subject, string body)
-        {
-            using (var client = new SmtpClient(_smtpServer, _smtpPort)
-            {
-                Credentials = new NetworkCredential(_smtpUser, _smtpPass),
-                EnableSsl = true // Gebruik SSL/TLS voor een veilige verbinding
-            })
-            {
-                var mailMessage = new MailMessage
-                {
-                    From = new MailAddress(_senderEmail, _senderName), // Gebruik herkenbare afzender
-                    Subject = subject,
-                    Body = body,
-                    IsBodyHtml = true // Zet op true als je HTML-e-mails verstuurt
-                };
-                mailMessage.To.Add(naarGebruiker);
-
-                client.Send(mailMessage); // Verstuur de e-mail
-            }
-        }
-
+        
         public async Task SendEmailAsync(string naarGebruiker, string subject, string body)
         {
             using (var client = new SmtpClient(_smtpServer, _smtpPort)

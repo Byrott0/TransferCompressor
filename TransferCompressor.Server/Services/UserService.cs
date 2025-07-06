@@ -23,18 +23,19 @@ namespace TransferCompressor.Server.Services
             return await _userRepository.GetAllAsync();
         }
 
-        // haal alle videos van een gebruiker op
-        public async Task<IEnumerable<Video>> GetVideosByUserAsync(User userId)
+        // haal alle videos van een gebruiker op (HOTFIX!)
+        
+        /*public async Task<IEnumerable<Video>> GetVideosByUserAsync(User userId)
         {
             return await _videoRepository.GetVideoByUserAsync(userId);
-        }
+        }*/
 
         // voeg een gebruiker toe
         public async Task AddUserAsync(string naam, string email, string password)
         {
             var user = new User
             {
-                naam = naam,
+                username = naam,
                 Email = email,
                 Password = password
                 // userId wordt automatisch gegenereerd door de database

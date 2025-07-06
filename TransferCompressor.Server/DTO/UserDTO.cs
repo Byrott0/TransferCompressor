@@ -7,7 +7,7 @@ namespace TransferCompressor.Server.DTO
     {
         public Guid userId { get; set; }
         // userId wordt automatisch gegenereerd door de database
-        public string naam { get; set; }
+        public string username { get; set; }
 
         [Required(ErrorMessage = "Email is verplicht.")]
         [EmailAddress(ErrorMessage = "Ongeldig emailformaat.")]

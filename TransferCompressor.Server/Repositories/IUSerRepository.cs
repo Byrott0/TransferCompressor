@@ -10,7 +10,6 @@ namespace TransferCompressor.Server.Repositories
         Task<User> UpdateAsync(User user);
         Task DeleteAsync(Guid id);
         Task<User> GetUserByEmailAsync(string email);
-
         Task SaveChanges();
     }
 }

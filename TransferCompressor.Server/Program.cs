@@ -1,5 +1,8 @@
+using System.Text;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using TransferCompressor.Server.Data;
 using TransferCompressor.Server.Repositories;
 using TransferCompressor.Server.Services;
@@ -47,7 +50,10 @@ namespace TransferCompressor.Server
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
+            
+            //versturen van emails
+            builder.Services.AddTransient<IEmailService, EmailService>();
+            
             var app = builder.Build();
 
             app.UseDefaultFiles();

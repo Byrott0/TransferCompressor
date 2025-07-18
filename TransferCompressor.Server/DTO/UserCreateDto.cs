@@ -5,9 +5,7 @@ namespace TransferCompressor.Server.DTO
 {
     public class UserCreateDto
     {
-        [Required(ErrorMessage = "Name is verplicht.")]
-        public string name { get; set; }   
-
+        
         [Required(ErrorMessage = "username is verplicht.")]
         public string username { get; set; }
 

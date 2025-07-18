@@ -39,7 +39,7 @@ namespace TransferCompressor.Server.Services
 
             var user = new User
             {
-                name = userCreate.name,
+               
                 username = userCreate.username, // TODO: check if this is unique
                 email = userCreate.email,
                 UploadedVideos = new List<Video>()
